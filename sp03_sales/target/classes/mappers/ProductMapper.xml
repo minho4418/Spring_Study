@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.my.sales.ProductMapper">
+	<insert id="insert">
+		INSERT INTO product(pcode, pname, price) 
+		VALUES(#{pcode}, #{pname}, #{price} )
+	</insert>
+	<select id="selectList" resultType="com.my.sales.dto.Product">
+		SELECT * FROM product
+		WHERE pname like '%' || #{findvalue} || '%'
+		ORDER BY pcode
+	</select>
+	<select id="selectOne" resultType="com.my.sales.dto.Product">
+		SELECT * FROM product
+		WHERE pcode = #{pcode}
+	</select>
+	<update id="update">
+		UPDATE product
+		SET pname = #{pname},
+			price = #{price}
+		WHERE pcode = #{pcode}
+	</update>
+	<delete id="delete">
+		DELETE FROM product
+		WHERE pcode = #{pcode}
+	</delete>
+</mapper>  
