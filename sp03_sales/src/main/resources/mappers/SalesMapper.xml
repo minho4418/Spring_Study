@@ -4,5 +4,51 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.my.sales.SalesMapper">
+	<insert id="insert">
+		INSERT INTO sales(seq, sdate, pcode, qty, amount) 
+		VALUES(s_seq.NEXTVAL,#{sdate}, #{pcode}, #{qty} , #{amount})
+	</insert>
 
+	<select id="selectList" resultType="java.util.Map">
+		SELECT S.seq, S.sdate, S.pcode, P.pname, P.price, S.qty, S.amount, S.regidate
+		FROM sales S JOIN product P ON(S.pcode=P.pcode)
+		<if test="findkey=='pname'">
+			WHERE P.pname like '%' || #{findvalue} || '%'
+		</if>
+		<if test="findkey=='sdate'">
+			WHERE S.sdate = #{findvalue}
+		</if>
+		ORDER BY s.sdate, p.pcode
+	</select>
+	
+	<select id="selectOne" resultType="com.my.sales.dto.Sales">
+		SELECT * FROM sales
+		WHERE seq = #{seq}
+	</select>
+	
+	<update id="update">
+		UPDATE sales
+		SET sdate= #{sdate},
+			pcode = #{pcode},
+			qty = #{qty},
+			amount = #{amount}
+		WHERE seq = #{seq}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM sales
+		WHERE seq = #{seq}
+	</delete>
+	
+	<!-- 상품삭제시 판매데이터 조회 -->
+	<select id="selectList_pcode" resultType="com.my.sales.dto.Sales">
+		SELECT * FROM sales
+		WHERE pcode = #{pcode}
+	</select>
+	
+	
+	
+	
+	
+	
 </mapper>  
