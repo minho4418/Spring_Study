@@ -6,52 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-	//수량*단가 => 가격 구하기
-	function amountCal() {
-		//선택된 옵션의 가격 가져오기
-		const pcode = document.getElementById('pcode');
-		var text = pcode.options[pcode.selectedIndex].text;
-		console.log(text);
-		var price = text.split(':')[2];
-		console.log(price);
-		
-		//수량 가져오기
- 		const qty = document.getElementById('qty').value;
-		console.log(qty);
-
-		//금액 세팅
-		document.getElementById('amount').value = price * qty;
-		
-	}
-	//판매등록버튼을 클릭했을때
-	function addCheck(e) {
-		e.preventDefault();
-		
-		const sdate = document.getElementById('sdate');
-		const pcode = document.getElementById('pcode');
-		const qty = document.getElementById('qty');
-		const amount = document.getElementById('amount');
-		if (sdate.value == '' ){
-			sdate.focus();
-			alert('판매날짜를 입력하세요!');
-		}else if (pcode.value == '' ){
-			pcode.focus();
-			alert('상품을 선택하세요!');
-		}else if (qty.value == '' ){
-			qty.focus();
-			alert('수량을 입력하세요!');
-		}else if (amount.value == '' ){
-			amount.focus();
-			alert('금액을 입력하세요!');
-		}else {
-			
-			document.getElementById('frmSalesAdd').submit();
-		}
-	}
-	
-
-</script>
+<!-- 자바스크립트 분리 -->
+<script type="text/javascript" src="${path}/resources/js/salesAdd.js"></script>
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
@@ -82,7 +38,7 @@
 			</tr>	
 			<tr>
 				<td colspan="2" align="center">
-					<button onclick="addCheck(event)">등록</button>
+					<button id = "btnAdd" onclick="addCheck(event)">등록</button>
 					<button type="reset">취소</button>
 				</td>
 			</tr>
