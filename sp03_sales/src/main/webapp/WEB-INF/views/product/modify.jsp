@@ -6,46 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-	if ('${msg}' != '')
-		alert('${msg}');
+<script type="text/javascript" src="${path}/resources/js/productModify.js"></script>
 
-	function modifyCheck(e) {
-		e.preventDefault();
-		const pcode = document.getElementById('pcode');
-		const pname = document.getElementById('pname');
-		const price = document.getElementById('price');
-		console.log(pcode);
-		console.log(pname);
-		console.log(price);
-		
-		if (pcode.value ==''){
-			pcode.focus();
-			alert('상품코드 입력!');
-			return ;
-		}else if (pname.value ==''){
-			pname.focus();
-			alert('상품명 입력!');
-			return ;
-		}else if (price.value ==''){
-			price.focus();
-			alert('단가를 입력!');
-			return ;
-		}
-		
-		document.getElementById('frmProductModify').submit();
-	}
-	//삭제버튼 클릭시
-	function deleteCheck(e) {
-		e.preventDefault();
-		const pcode = document.getElementById('pcode').value;
-		console.log(pcode);
-		if (confirm('삭제하시겠습니까?')){
-			location.href = '${path}/product/remove?pcode='+pcode;
-		}
-		
-	}
-</script>
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
@@ -74,7 +36,7 @@
 				<td colspan="2">
 					<button onclick="modifyCheck(event)">수정</button>
 					<button type="reset">취소</button>
-					<button onclick="deleteCheck(event)">삭제</button>
+					<button onclick="removeCheck(event, '${path}')">삭제</button>
 				</td>
 			</tr>
 			
