@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="jquery-3.6.0.js"></script>
+<script type="text/javascript" src="jsjs.js"></script>
+<script type="text/javascript">
+	// jQuery 시작점 - main
+	// html 문서를 메모리 전부 로딩(DOM 생성)하면 시작
+	$(document).ready(function() {
+		alert('Hello jQuery');
+	});
+</script>
+<link rel="stylesheet" href="csscss.css">
+</head>
+<body>
+<div id="wrap">
+  <h1>
+    쓰로틀링, 디바운싱 비교
+  </h1>
+  <p>스크롤을 움직이며 모다피가 따라오는 움직임을 확인해보세요!</p>
+  
+  <div id="basic" class="example-box">
+    <h2>
+      basic
+    </h2>
+    <div class="scroll-box">
+      <div class="inner">
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb7Jt0u%2FbtqYpW73h6d%2F3vPn8SAhkS3kPJXBkbUSzk%2Fimg.png" width="100" class="chasing-image" />
+        <p class="counter">실행 횟수: <span class="count">0</span></p>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+  const $basicBox = document.querySelector("#basic .scroll-box");
+  const $count = document.querySelector("#basic .count")
+  const $chaser = document.querySelector("#basic .chasing-image");
+  $basicBox.addEventListener("scroll", event => {
+     $chaser.style.transform = `translateY(${event.currentTarget.scrollTop + 20}px)`;
+    $count.textContent = parseInt($count.textContent)+1;
+  });
+  </script>
+  
+    <div id="throttle" class="example-box">
+    <h2>
+      쓰로틀링(Throttling)
+    </h2>
+    <div class="scroll-box">
+      <div class="inner">
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb7Jt0u%2FbtqYpW73h6d%2F3vPn8SAhkS3kPJXBkbUSzk%2Fimg.png" width="100" class="chasing-image" />
+        <p class="counter">실행 횟수: <span class="count">0</span></p>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+  const $basicBox1 = document.querySelector("#throttle .scroll-box");
+  const $count1 = document.querySelector("#throttle .count")
+  const $chaser1= document.querySelector("#throttle .chasing-image");
+    
+  let timer;
+  const throttle = (callback, delay) => {
+    if(!timer) {
+      timer = setTimeout(()=>{
+        timer = null;
+        callback();
+      }, delay);
+    }
+  }
+    
+  $basicBox1.addEventListener("scroll", event => {
+    const {currentTarget} = event;
+    throttle(()=>{
+      $chaser1.style.transform = `translateY(${currentTarget.scrollTop + 20}px)`;
+      $count1.textContent = parseInt($count1.textContent)+1;
+    }, 200);
+  });
+  </script>
+    <div id="debounce" class="example-box">
+    <h2>
+      디바운싱(Debouncing)
+    </h2>
+    <div class="scroll-box">
+      <div class="inner">
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb7Jt0u%2FbtqYpW73h6d%2F3vPn8SAhkS3kPJXBkbUSzk%2Fimg.png" width="100" class="chasing-image" />
+        <p class="counter">실행 횟수: <span class="count">0</span></p>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+  const $basicBox2 = document.querySelector("#debounce .scroll-box");
+  const $count2 = document.querySelector("#debounce .count")
+  const $chaser2 = document.querySelector("#debounce .chasing-image");
+    
+  let timer2;
+  const debounce = (callback, delay) => {
+    if(timer2){
+      clearTimeout(timer2);
+    }
+    timer2 = setTimeout(callback, delay);
+  }
+    
+  $basicBox2.addEventListener("scroll", event => {
+    const {currentTarget} = event;
+    debounce(()=>{
+      $chaser2.style.transform = `translateY(${currentTarget.scrollTop + 20}px)`;
+      $count2.textContent = parseInt($count2.textContent)+1;
+    }, 200);
+  });
+  </script>
+</div>
+</body>
+</html>
